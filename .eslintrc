@@ -1,9 +1,12 @@
 {
-  "root": true,
+  "plugins": ["react", "react-native", "react-hooks"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "modules": true
     }
   },
   "extends": [
@@ -20,26 +23,15 @@
     "plugin:jest/recommended",
     "@react-native-community"
   ],
-  "plugins": ["react-hooks", "detox"],
   "rules": {
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    ],
-    "react/jsx-fragments": [1, "syntax"],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  },
-  "env": {
-    "jest": true,
-    "detox/detox": true,
-    "react-native/react-native": true
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
   "settings": {
-    "react": {
-      "version": "detect"
+    "import/resolver": {
+      "babel-module": {}
     }
+  },
+  "env": {
+    "react-native/react-native": true
   }
 }
