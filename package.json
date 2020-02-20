@@ -9,7 +9,7 @@
     "lint": "npm-run-all --parallel eslint prettier",
     "test": "jest",
     "tsc": "tsc -noEmit",
-    "git:add": "git add",
+    "git:add": "git add .",
     "postversion": "react-native-version"
   },
   "husky": {
