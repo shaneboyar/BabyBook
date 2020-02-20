@@ -5,7 +5,7 @@ import styles from './styles';
 export default (): JSX.Element => {
   return (
     <View style={styles.container}>
-      <Text>Home!</Text>
+      <Text>Feed!</Text>
     </View>
   );
 };
