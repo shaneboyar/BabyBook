@@ -1,22 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { FeedScreen, FavoritesScreen, CameraScreen } from '@screens';
-import {
-  BottomTabNavigationOptions,
-  BottomTabBarOptions,
-} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
-import { softPurple, lightGray } from '@colors';
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
+import { Feather, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import { FeedScreen, FavoritesScreen } from '@screens';
+import { softPurple } from '@colors';
 import { Routes } from '@navigators';
+import TabNavigator from './TabNavigator';
 
-const { Navigator, Screen } = createBottomTabNavigator();
-
-const tabBarOptions: BottomTabBarOptions = {
-  activeTintColor: softPurple,
-  style: {
-    backgroundColor: lightGray,
-  },
-};
+const { Screen } = createBottomTabNavigator();
 
 const screenOptions = ({ route }): BottomTabNavigationOptions => ({
   tabBarIcon: ({ focused }) => {
@@ -47,12 +38,8 @@ const screenOptions = ({ route }): BottomTabNavigationOptions => ({
 });
 
 export default () => (
-  <Navigator
-    tabBarOptions={tabBarOptions}
-    screenOptions={screenOptions}
-    initialRouteName={Routes.Feed}>
+  <TabNavigator screenOptions={screenOptions} initialRouteName={Routes.Feed}>
     <Screen name="Favorites" component={FavoritesScreen} />
-    <Screen name="Camera" component={CameraScreen} />
     <Screen name="Feed" component={FeedScreen} />
-  </Navigator>
+  </TabNavigator>
 );

@@ -4,12 +4,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { TabNavigator } from '@navigators';
+import { RootStackNavigator } from '@navigators';
 
 export default function App() {
   return (
     <NavigationContainer>
-      <TabNavigator />
+      <RootStackNavigator />
     </NavigationContainer>
   );
 }

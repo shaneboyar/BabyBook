@@ -1275,6 +1275,14 @@
   dependencies:
     shortid "^2.2.15"
 
+"@react-navigation/stack@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.0.6.tgz#e3e867b5d1b13e998c26411197cc102a4e747ebe"
+  integrity sha512-8j5KvLJ30yxlv0NhZhdcecvzUEhq2V0SnHOdjvkrJSo6cjmOU559t0QoSCqXLksH94TGnIJYbKIcc+ijME7bYA==
+  dependencies:
+    color "^3.1.2"
+    react-native-iphone-x-helper "^1.2.1"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
