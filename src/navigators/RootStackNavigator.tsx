@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Routes, MainTabNavigator } from '@navigators';
+import { Routes } from '@routes';
+import MainTabNavigator from './MainTabNavigator';
 import CameraStackNavigator from './CameraStackNavigator';
 
 const { Navigator, Screen } = createStackNavigator();

@@ -22,6 +22,7 @@ module.exports = function(api) {
             '@colors': './src/colors',
             '@components': './src/components',
             '@navigators': './src/navigators',
+            '@routes': './src/routes',
             '@screens': './src/screens',
           },
         },

@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { Feather, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { FeedScreen, FavoritesScreen } from '@screens';
+import { Routes } from '@routes';
 import { softPurple } from '@colors';
-import { Routes } from '@navigators';
 import TabNavigator from './TabNavigator';
 
 const { Screen } = createBottomTabNavigator();

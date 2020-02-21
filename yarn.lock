@@ -3627,10 +3627,25 @@ expo-asset@~8.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-camera@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-8.0.0.tgz#a0caee7baf1f2013203fe6a4635125ade12ec164"
+  integrity sha512-mtP4NV2R4e+JTXUZBiA0ok4xSzTfRLxirvqJ5T7kjyozuCWUJeOhGk3hqNsBbWhwXDA+hirAge7169UB3vKfDQ==
+  dependencies:
+    lodash "^4.6.0"
+    prop-types "^15.6.0"
+
 expo-constants@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-8.0.0.tgz#e2c5a072dacb4263ccfc57dcb4835ca791960d48"
   integrity sha512-NGRwSWfhwNFA9WVLXwqnSDPJJ4DdXTqEkl9Fr9PcyW5VCoFgz7uke256E1YZsYhOE0Ph365lu/5jjZs+MRmRog==
+  dependencies:
+    ua-parser-js "^0.7.19"
+
+expo-device@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/expo-device/-/expo-device-2.0.0.tgz#05c8c2cc0147e937783bf7496d6dea83a25bdebf"
+  integrity sha512-iF5U55AbARpuywByFlf4uFGigMaXXPTc34TcC36CLKiwkoUguW0TXuq1UCfEjZiLYEF9v+rKZ2rQb2CSvo+nQA==
   dependencies:
     ua-parser-js "^0.7.19"
 
@@ -7133,6 +7148,11 @@ react-native-screens@^2.0.0-beta.9:
   integrity sha512-nZJFDeXap+gnZ932SeOGm76lHKnb42502fJmqMJzGxKbGV2idvkGmSHllTVDG/krw/lMmTJ0CA4GPvFXMfCrLg==
   dependencies:
     debounce "^1.2.0"
+
+react-native-size-matters@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.0.tgz#0692e324a189884819b570c4cab24d27ecd4311d"
+  integrity sha512-PuwA07mr3woQPFJXo3FwlFwpe6bb2LCb20sDZ4JWMpGBtmppq4sKH4GLgS6Sw+GkN0sSOEXGZLaOsHZYFY9hJg==
 
 react-native-unimodules@~0.7.0:
   version "0.7.0"

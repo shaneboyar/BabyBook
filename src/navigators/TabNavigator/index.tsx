@@ -8,9 +8,9 @@ import { View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
-// import { Routes } from '@navigators';
 import { softPurple } from '@colors';
-import { Routes } from '@navigators';
+import { Routes } from '@routes';
+import { shadow } from 'utils';
 
 export default ({ initialRouteName, children, screenOptions }) => {
   const { state, navigation, descriptors } = useNavigationBuilder(TabRouter, {
@@ -19,7 +19,6 @@ export default ({ initialRouteName, children, screenOptions }) => {
     initialRouteName,
   });
 
-  console.log('state: ', state);
   return (
     <>
       <View style={styles.screenContentContainer}>
@@ -36,10 +35,6 @@ export default ({ initialRouteName, children, screenOptions }) => {
                     ...TabActions.jumpTo(route.name),
                     target: state.key,
                   });
-                  // navigation.dispatch({
-                  //   ...TabActions.jumpTo(route.name),
-                  //   target: state.key,
-                  // });
                 }}
                 style={styles.tabButtonContainer}>
                 {descriptors[route.key].options.tabBarIcon({
@@ -50,7 +45,7 @@ export default ({ initialRouteName, children, screenOptions }) => {
           })}
         </View>
         <View style={styles.cameraButtonContainer}>
-          <View style={styles.shadow}>
+          <View style={shadow}>
             <TouchableOpacity
               style={styles.cameraButton}
               onPress={() => navigation.navigate(Routes.Camera)}>
