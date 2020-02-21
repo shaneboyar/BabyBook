@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { IconNames, RoundButton } from '@components';
 import { Routes } from '@routes';
 import styles from './styles';
+import { getLocationAsync } from 'utils';
 
 export default (): JSX.Element => {
   const { goBack, navigate } = useNavigation();
@@ -32,8 +33,9 @@ export default (): JSX.Element => {
     setCameraLoading(true);
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
+      const location = await getLocationAsync();
       setCameraLoading(false);
-      navigate(Routes.Preview, { photo });
+      navigate(Routes.Preview, { photo, location });
     }
   }, [cameraRef, navigate]);
 

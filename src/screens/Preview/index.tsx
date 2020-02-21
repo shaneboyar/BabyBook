@@ -1,16 +1,26 @@
 import React from 'react';
 import { View, Image, Dimensions, SafeAreaView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import styles from './styles';
 import { RoundButton, IconNames } from '@components';
+import styles from './styles';
 
 type CapturedPicture = {
   width: number;
   height: number;
   uri: string;
-  base64?: string;
-  exif?: any;
 };
+
+export interface LocationData {
+  coords: {
+    latitude: number;
+    longitude: number;
+    altitude: number;
+    accuracy: number;
+    heading: number;
+    speed: number;
+  };
+  timestamp: number;
+}
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,7 +29,9 @@ export default () => {
   const route = useRoute();
   const {
     photo: { uri },
-  } = route.params as { photo: CapturedPicture };
+    location,
+  } = route.params as { photo: CapturedPicture; location: LocationData };
+  console.log('location: ', location);
 
   return (
     <View style={styles.container}>

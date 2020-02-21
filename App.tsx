@@ -5,8 +5,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackNavigator } from '@navigators';
+import * as Location from 'expo-location';
 
 export default function App() {
+  Location.requestPermissionsAsync();
   return (
     <NavigationContainer>
       <RootStackNavigator />
