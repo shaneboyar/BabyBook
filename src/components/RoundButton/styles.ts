@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { white } from '@colors';
+import { white, opacityColor } from '@colors';
 import { scale } from 'react-native-size-matters';
 
 export const caluclateContainerSize = size => ({
@@ -9,16 +9,9 @@ export const caluclateContainerSize = size => ({
 });
 
 export default StyleSheet.create({
-  buttonBackground: {
-    backgroundColor: white,
-    opacity: 0.5,
-  },
   container: {
     alignItems: 'center',
+    backgroundColor: opacityColor(white, 0.5),
     justifyContent: 'center',
-  },
-  iconContainer: {
-    opacity: 1,
-    position: 'absolute',
   },
 });

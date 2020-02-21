@@ -3,6 +3,7 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { softPurple } from '@colors';
 
 export enum IconNames {
+  Award = 'award',
   Back = 'back',
   Camera = 'camera',
   Flip = 'flip',
@@ -19,6 +20,7 @@ interface IconNameMap {
 }
 
 const iconNameMap = {
+  [IconNames.Award]: props => <Feather name="award" {...props} />,
   [IconNames.Back]: props => <Feather name="arrow-left" {...props} />,
   [IconNames.Camera]: props => <Feather name="camera" {...props} />,
   [IconNames.Flip]: props => <Feather name="refresh-ccw" {...props} />,

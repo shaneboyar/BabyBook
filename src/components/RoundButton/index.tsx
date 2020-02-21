@@ -10,7 +10,6 @@ interface RoundButtonProps {
   iconName: IconNames;
   iconColor?: string;
   onPress?(): void;
-  containerStyle?: ViewStyle;
   buttonStyle?: ViewStyle;
   loading?: boolean;
 }
@@ -26,22 +25,17 @@ export default ({
   iconName,
   iconColor,
   onPress,
-  containerStyle,
   buttonStyle,
   loading = false,
 }: RoundButtonProps) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.container, containerStyle]}>
+    <TouchableOpacity onPress={onPress}>
       <View
         style={[
-          styles.buttonBackground,
+          styles.container,
           caluclateContainerSize(sizeMap[size]),
           buttonStyle,
-        ]}
-      />
-      <View style={styles.iconContainer}>
+        ]}>
         {loading ? (
           <ActivityIndicator color={white} />
         ) : (
