@@ -18,6 +18,14 @@ export default StyleSheet.create({
     ...shadow,
   },
   date: {},
+  favoriteButton: {
+    backgroundColor: white,
+  },
+  favoriteButtonContainer: {
+    bottom: scale(82),
+    position: 'absolute',
+    right: scale(0),
+  },
   imageContainer: {
     ...StyleSheet.absoluteFillObject,
   },

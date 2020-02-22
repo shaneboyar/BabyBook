@@ -1,5 +1,5 @@
 import React, { JSXElementConstructor } from 'react';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import { Entypo, Feather, FontAwesome5 } from '@expo/vector-icons';
 import { softPurple } from '@colors';
 
 export enum IconNames {
@@ -7,6 +7,8 @@ export enum IconNames {
   Back = 'back',
   Camera = 'camera',
   Flip = 'flip',
+  Heart = 'heart',
+  HeartOutline = 'heartOutline',
   Pen = 'pen',
   Send = 'send',
   Video = 'video',
@@ -24,6 +26,10 @@ const iconNameMap = {
   [IconNames.Back]: props => <Feather name="arrow-left" {...props} />,
   [IconNames.Camera]: props => <Feather name="camera" {...props} />,
   [IconNames.Flip]: props => <Feather name="refresh-ccw" {...props} />,
+  [IconNames.HeartOutline]: props => (
+    <Entypo name="heart-outlined" {...props} />
+  ),
+  [IconNames.Heart]: props => <Entypo name="heart" {...props} />,
   [IconNames.Pen]: props => <FontAwesome5 name="pen-nib" {...props} />,
   [IconNames.Send]: props => <Feather name="send" {...props} />,
 };

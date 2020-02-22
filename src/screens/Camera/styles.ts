@@ -7,7 +7,7 @@ const { height, width } = Dimensions.get('window');
 export default StyleSheet.create({
   cameraButtonContainer: {
     alignItems: 'center',
-    marginBottom: scale(16),
+    marginBottom: scale(8),
     width: '100%',
   },
   container: {
@@ -24,6 +24,6 @@ export default StyleSheet.create({
   secondaryActionsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: scale(16),
+    margin: scale(8),
   },
 });

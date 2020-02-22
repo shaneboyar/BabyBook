@@ -1,23 +1,86 @@
 import React from 'react';
-import { View } from 'react-native';
-import styles from './styles';
+import { FlatList, SafeAreaView, Dimensions } from 'react-native';
 import { Card } from '@components';
+import styles from './styles';
+
+const { height, width } = Dimensions.get('window');
 
 const stubImage = {
-  source: { uri: 'https://placebear.com/500/1500' },
-  height: 1500,
-  width: 500,
+  source: { uri: `https://placebear.com/${width}/${height}` },
+  height,
+  width,
 };
+
+const stubCards = [
+  {
+    key: '0',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+  {
+    key: '1',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+  {
+    key: '2',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+  {
+    key: '3',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+  {
+    key: '4',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+  {
+    key: '5',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+  {
+    key: '6',
+    imageData: stubImage,
+    title: 'Test',
+    milestone: 'A Milestone',
+    date: new Date(),
+  },
+];
 
 export default (): JSX.Element => {
   return (
-    <View style={styles.container}>
-      <Card
-        imageData={stubImage}
-        title="Test"
-        milestone="A milestone"
-        date={new Date()}
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        style={{ alignSelf: 'stretch', marginBottom: 64 }}
+        data={stubCards}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item: { key, imageData, title, milestone, date } }) => (
+          <Card
+            key={key}
+            imageData={imageData}
+            title={title}
+            milestone={milestone}
+            date={date}
+            containerStyle={{ marginBottom: 16 }}
+          />
+        )}
       />
-    </View>
+    </SafeAreaView>
   );
 };

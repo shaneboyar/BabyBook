@@ -6,7 +6,7 @@ import styles, { caluclateContainerSize } from './styles';
 import { white } from '@colors';
 
 interface RoundButtonProps {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'extraSmall' | 'small' | 'medium' | 'large';
   iconName: IconNames;
   iconColor?: string;
   onPress?(): void;
@@ -15,6 +15,7 @@ interface RoundButtonProps {
 }
 
 const sizeMap = {
+  extraSmall: 24,
   small: 32,
   medium: 48,
   large: 64,

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { white, opacityColor } from '@colors';
 import { scale } from 'react-native-size-matters';
+import { shadow } from 'utils';
 
 export const caluclateContainerSize = size => ({
   borderRadius: scale(size),
@@ -13,5 +14,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: opacityColor(white, 0.5),
     justifyContent: 'center',
+    margin: 8,
+    ...shadow,
   },
 });
