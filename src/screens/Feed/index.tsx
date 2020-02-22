@@ -18,6 +18,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: true,
   },
   {
     key: '1',
@@ -25,6 +26,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: false,
   },
   {
     key: '2',
@@ -32,6 +34,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: true,
   },
   {
     key: '3',
@@ -39,6 +42,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: false,
   },
   {
     key: '4',
@@ -46,6 +50,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: false,
   },
   {
     key: '5',
@@ -53,6 +58,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: false,
   },
   {
     key: '6',
@@ -60,6 +66,7 @@ const stubCards = [
     title: 'Test',
     milestone: 'A Milestone',
     date: new Date(),
+    favorited: true,
   },
 ];
 
@@ -70,7 +77,9 @@ export default (): JSX.Element => {
         style={{ alignSelf: 'stretch', marginBottom: 64 }}
         data={stubCards}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item: { key, imageData, title, milestone, date } }) => (
+        renderItem={({
+          item: { key, imageData, title, milestone, date, favorited },
+        }) => (
           <Card
             key={key}
             imageData={imageData}
@@ -78,6 +87,7 @@ export default (): JSX.Element => {
             milestone={milestone}
             date={date}
             containerStyle={{ marginBottom: 16 }}
+            favorited={favorited}
           />
         )}
       />

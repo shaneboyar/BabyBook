@@ -20,6 +20,7 @@ interface CardProps {
   title: string;
   milestone: string;
   containerStyle?: ViewStyle;
+  favorited: boolean;
 }
 
 export default ({
@@ -28,6 +29,7 @@ export default ({
   date,
   milestone,
   containerStyle,
+  favorited,
 }: CardProps) => (
   <TouchableOpacity
     onPress={() => {
@@ -55,7 +57,7 @@ export default ({
         <RoundButton
           buttonStyle={styles.favoriteButton}
           size="extraSmall"
-          iconName={IconNames.HeartOutline}
+          iconName={favorited ? IconNames.Heart : IconNames.HeartOutline}
         />
       </View>
     </ImageBackground>
