@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, TextInput, Button } from 'react-native';
 import styles from './styles';
-import { UserContext, LocalUserData } from '@utils';
+import { UserContext, LocalUserData, storeData } from '@utils';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { useNavigation } from '@react-navigation/native';
@@ -27,10 +27,12 @@ export default () => {
 
   useEffect(() => {
     const login = async userData => {
+      console.log('userData: ', userData);
       setUser(userData);
       navigate(Routes.Main);
     };
     if (data) {
+      storeData('user', data.createUser);
       login(data.createUser);
     }
   }, [data, navigate, setUser]);

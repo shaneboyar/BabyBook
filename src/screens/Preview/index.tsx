@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useContext, useCallback } from 'react';
 import { View, Image, Dimensions, SafeAreaView } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { RoundButton, IconNames } from '@components';
+import * as FileSystem from 'expo-file-system';
 import styles from './styles';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import { UserContext } from '@utils';
+import { Routes } from '@routes';
+
+type PreviewRouteProps = RouteProp<
+  Record<
+    string,
+    {
+      photo: CapturedPicture;
+      location: LocationData;
+    }
+  >,
+  Routes.Preview
+>;
 
 type CapturedPicture = {
   width: number;
@@ -22,20 +38,67 @@ export interface LocationData {
   timestamp: number;
 }
 
+const CREATE_IMAGE = gql`
+  mutation Image(
+    $file: ReactNativeFile!
+    $latitude: Float!
+    $longitude: Float!
+    $time: Date!
+    $userId: Int!
+  ) {
+    createImage(
+      file: $file
+      latitude: $latitude
+      longitude: $longitude
+      timestamp: $time
+      UserId: $userId
+    ) {
+      uri
+    }
+  }
+`;
+
 const { width, height } = Dimensions.get('window');
 
+const read = async (uri: string) => {
+  const stream = await FileSystem.readAsStringAsync(uri, {
+    encoding: FileSystem.EncodingType.Base64,
+  });
+  return stream;
+};
+
 export default () => {
+  const [createImage] = useMutation(CREATE_IMAGE);
   const { goBack } = useNavigation();
-  const route = useRoute();
-  const {
-    photo: { uri },
-    location,
-  } = route.params as { photo: CapturedPicture; location: LocationData };
-  console.log('location: ', location);
+  const user = useContext(UserContext);
+  const route = useRoute<PreviewRouteProps>();
+
+  const uploadFile = useCallback(
+    async (userId: number) => {
+      const { photo, location } = route.params as {
+        photo: CapturedPicture;
+        location: LocationData;
+      };
+      const file = await read(photo.uri);
+      await createImage({
+        variables: {
+          file,
+          userId,
+          time: new Date().getTime(),
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+      });
+    },
+    [createImage, route.params],
+  );
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri }} style={{ width, height }} />
+      <Image
+        source={{ uri: route.params.photo.uri }}
+        style={{ width, height }}
+      />
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.secondaryActionsContainer}>
           <RoundButton
@@ -53,7 +116,7 @@ export default () => {
           <RoundButton
             size="medium"
             iconName={IconNames.Send}
-            // onPress={takePicture}
+            onPress={() => uploadFile(user.id)}
           />
         </View>
       </SafeAreaView>

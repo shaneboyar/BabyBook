@@ -7,7 +7,7 @@ import { RootStackNavigator } from '@navigators';
 import { getPushToken, storeData, retrieveData, UserContext } from '@utils';
 import * as Location from 'expo-location';
 import * as Font from 'expo-font';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 
 const client = new ApolloClient({
   uri: 'http://192.168.86.48:4000/',
@@ -18,9 +18,8 @@ function App() {
   const [user, setUser] = useState();
 
   const setupApp = async () => {
-    await AsyncStorage.clear();
+    // await AsyncStorage.clear();
     const storedUser = await retrieveData('user');
-    console.log('storedUser: ', storedUser);
     setUser(storedUser);
     if (!storedUser) {
       console.log('No uuid found. Fetching and storing locally');
