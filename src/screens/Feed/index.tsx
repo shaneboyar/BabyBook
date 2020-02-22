@@ -70,25 +70,27 @@ const stubCards = [
   },
 ];
 
-export default (): JSX.Element => (
-  <SafeAreaView style={styles.container}>
-    <FlatList
-      style={{ alignSelf: 'stretch', marginBottom: 64 }}
-      data={stubCards}
-      showsVerticalScrollIndicator={false}
-      renderItem={({
-        item: { key, imageData, title, milestone, date, favorited },
-      }) => (
-        <Card
-          key={key}
-          imageData={imageData}
-          title={title}
-          milestone={milestone}
-          date={date}
-          containerStyle={{ marginBottom: 16 }}
-          favorited={favorited}
-        />
-      )}
-    />
-  </SafeAreaView>
-);
+export default (): JSX.Element => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        style={{ alignSelf: 'stretch', marginBottom: 64 }}
+        data={stubCards}
+        showsVerticalScrollIndicator={false}
+        renderItem={({
+          item: { key, imageData, title, milestone, date, favorited },
+        }) => (
+          <Card
+            key={key}
+            imageData={imageData}
+            title={title}
+            milestone={milestone}
+            date={date}
+            containerStyle={{ marginBottom: 16 }}
+            favorited={favorited}
+          />
+        )}
+      />
+    </SafeAreaView>
+  );
+};

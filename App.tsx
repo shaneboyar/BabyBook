@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
-import { AppLoading, SplashScreen } from 'expo';
+import { AppLoading } from 'expo';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackNavigator } from '@navigators';
-import { getPushToken, storeData, retrieveData } from '@utils';
+import { getPushToken, storeData, retrieveData, UserContext } from '@utils';
 import * as Location from 'expo-location';
 import * as Font from 'expo-font';
+import { AsyncStorage } from 'react-native';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
+  uri: 'http://192.168.86.48:4000/',
 });
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState();
 
   const setupApp = async () => {
-    const storedUUID = await retrieveData('uuid');
-    if (!storedUUID) {
+    await AsyncStorage.clear();
+    const storedUser = await retrieveData('user');
+    console.log('storedUser: ', storedUser);
+    setUser(storedUser);
+    if (!storedUser) {
       console.log('No uuid found. Fetching and storing locally');
       const uuid = await getPushToken();
-      await storeData('uuid', uuid);
+      await storeData('user', { uuid });
+      setUser({ uuid });
     }
     await Location.requestPermissionsAsync();
     await Font.loadAsync({
@@ -32,24 +38,25 @@ function App() {
     });
   };
 
-  if (loading) {
+  if (loading || !user) {
     return (
       <AppLoading
         startAsync={setupApp}
         onFinish={() => {
-          SplashScreen.hide();
           setLoading(false);
         }}
         onError={console.warn}
-        autoHideSplash={false}
+        autoHideSplash={true}
       />
     );
   }
 
   return (
-    <NavigationContainer>
-      <RootStackNavigator />
-    </NavigationContainer>
+    <UserContext.Provider value={{ ...user, setUser }}>
+      <NavigationContainer>
+        <RootStackNavigator />
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
