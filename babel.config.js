@@ -21,9 +21,11 @@ module.exports = function(api) {
           alias: {
             '@colors': './src/colors',
             '@components': './src/components',
+            '@hooks': './src/hooks',
             '@navigators': './src/navigators',
             '@routes': './src/routes',
             '@screens': './src/screens',
+            '@utils': './src/utils',
           },
         },
         '@babel/plugin-proposal-class-properties',

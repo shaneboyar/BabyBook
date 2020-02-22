@@ -12,9 +12,11 @@
     "paths": {
       "@colors": ["./colors"],
       "@components": ["./components"],
+      "@hooks": ["./hooks"],
       "@navigators": ["./navigators"],
       "@routes": ["./routes"],
-      "@screens": ["./screens"]
+      "@screens": ["./screens"],
+      "@utils": ["./utils"]
     }
   }
 }
