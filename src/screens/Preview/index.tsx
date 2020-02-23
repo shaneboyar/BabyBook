@@ -40,17 +40,15 @@ export interface LocationData {
 
 const CREATE_IMAGE = gql`
   mutation Image(
-    $file: ReactNativeFile!
+    $file: Upload!
     $latitude: Float!
     $longitude: Float!
-    $time: Date!
     $userId: Int!
   ) {
     createImage(
       file: $file
       latitude: $latitude
       longitude: $longitude
-      timestamp: $time
       UserId: $userId
     ) {
       uri
@@ -68,6 +66,7 @@ const read = async (uri: string) => {
 };
 
 export default () => {
+  const { navigate } = useNavigation();
   const [createImage] = useMutation(CREATE_IMAGE);
   const { goBack } = useNavigation();
   const user = useContext(UserContext);
@@ -75,22 +74,26 @@ export default () => {
 
   const uploadFile = useCallback(
     async (userId: number) => {
-      const { photo, location } = route.params as {
-        photo: CapturedPicture;
-        location: LocationData;
-      };
-      const file = await read(photo.uri);
-      await createImage({
-        variables: {
-          file,
-          userId,
-          time: new Date().getTime(),
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        },
-      });
+      try {
+        const { photo, location } = route.params as {
+          photo: CapturedPicture;
+          location: LocationData;
+        };
+        const file = await read(photo.uri);
+        await createImage({
+          variables: {
+            file,
+            userId,
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          },
+        });
+      } catch (error) {
+        console.log('Error with image: ', error);
+      }
+      navigate(Routes.Feed);
     },
-    [createImage, route.params],
+    [createImage, navigate, route.params],
   );
 
   return (

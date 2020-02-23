@@ -27,7 +27,6 @@ export default () => {
 
   useEffect(() => {
     const login = async userData => {
-      console.log('userData: ', userData);
       setUser(userData);
       navigate(Routes.Main);
     };
