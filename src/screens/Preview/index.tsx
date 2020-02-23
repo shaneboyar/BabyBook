@@ -91,7 +91,7 @@ export default () => {
       } catch (error) {
         console.log('Error with image: ', error);
       }
-      navigate(Routes.Feed);
+      navigate(Routes.Feed, { refresh: true });
     },
     [createImage, navigate, route.params],
   );
