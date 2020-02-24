@@ -43,13 +43,13 @@ const CREATE_IMAGE = gql`
     $file: Upload!
     $latitude: Float!
     $longitude: Float!
-    $userId: Int!
+    $UserId: Int!
   ) {
     createImage(
       file: $file
       latitude: $latitude
       longitude: $longitude
-      UserId: $userId
+      UserId: $UserId
     ) {
       uri
     }
@@ -67,7 +67,7 @@ export default () => {
   const route = useRoute<PreviewRouteProps>();
 
   const uploadFile = useCallback(
-    async (userId: number) => {
+    async (UserId: number) => {
       setLoading(true);
       try {
         const { photo, location } = route.params as {
@@ -82,7 +82,7 @@ export default () => {
         await createImage({
           variables: {
             file,
-            userId,
+            UserId,
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           },

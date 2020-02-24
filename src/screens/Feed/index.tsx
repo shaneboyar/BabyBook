@@ -23,9 +23,6 @@ const GET_ALL_IMAGES = gql`
       id
       uri
       createdAt
-      user {
-        name
-      }
     }
   }
 `;
@@ -70,16 +67,12 @@ export default (): JSX.Element => {
           data={data.getAllImages}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => `${item.id}`}
-          renderItem={({
-            item: { uri, milestone, title, date, favorited },
-          }) => (
+          renderItem={({ item: { uri, metadata, favorited } }) => (
             <Card
-              imageData={{ source: { uri }, height: 100, width: 100 }}
-              title={title || 'Placeholder'}
-              milestone={milestone || 'Placeholder'}
-              date={date || new Date()}
-              containerStyle={{ marginBottom: 16 }}
+              uri={uri}
+              metadata={metadata}
               favorited={favorited}
+              containerStyle={{ marginBottom: 16 }}
             />
           )}
         />

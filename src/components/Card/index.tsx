@@ -10,37 +10,27 @@ import Icon, { IconNames } from '../Icon';
 import RoundButton from '../RoundButton';
 
 interface CardProps {
-  imageData: {
-    source: {
-      uri: string;
-    };
-    height: number;
-    width: number;
+  uri: string;
+  metadata: {
+    date: Date;
+    title: string;
+    milestone: string;
   };
-  date: Date;
-  title: string;
-  milestone: string;
-  containerStyle?: ViewStyle;
+
   favorited: boolean;
+  containerStyle?: ViewStyle;
 }
 
-export default ({
-  imageData,
-  title,
-  date,
-  milestone,
-  containerStyle,
-  favorited,
-}: CardProps) => {
+export default ({ uri, metadata, favorited, containerStyle }: CardProps) => {
   const [path, setPath] = useState();
 
   useEffect(() => {
-    const getPath = async (uri: string) => {
+    const getPath = async () => {
       const cachePath = await CacheManager.get(uri, {}).getPath();
       setPath(cachePath);
     };
-    getPath(imageData.source.uri);
-  }, [imageData.source.uri]);
+    getPath();
+  }, [uri]);
 
   return !path ? null : (
     <TouchableOpacity style={[styles.container, containerStyle]}>
@@ -54,20 +44,22 @@ export default ({
         }}
         uri={path}
       />
-      <View style={styles.cardContentContainer}>
-        <Text size={8} style={styles.date}>
-          {moment(date).format('MMMM Do YYYY @ h:mm:ss a')}
-        </Text>
-        <Text size={32} variant="bold" style={styles.title}>
-          {title}
-        </Text>
-        <View style={styles.milestoneContainer}>
-          <Icon color={black} name={IconNames.Award} />
-          <Text variant="semi-bold" style={styles.milestone}>
-            {milestone}
+      {metadata && (
+        <View style={styles.cardContentContainer}>
+          <Text size={8} style={styles.date}>
+            {moment(metadata.date).format('MMMM Do YYYY @ h:mm:ss a')}
           </Text>
+          <Text size={32} variant="bold" style={styles.title}>
+            {metadata.title}
+          </Text>
+          <View style={styles.milestoneContainer}>
+            <Icon color={black} name={IconNames.Award} />
+            <Text variant="semi-bold" style={styles.milestone}>
+              {metadata.milestone}
+            </Text>
+          </View>
         </View>
-      </View>
+      )}
       <View style={styles.favoriteButtonContainer}>
         <RoundButton
           buttonStyle={styles.favoriteButton}
