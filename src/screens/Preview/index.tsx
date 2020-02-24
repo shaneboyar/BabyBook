@@ -1,13 +1,13 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useState } from 'react';
 import { View, Image, Dimensions, SafeAreaView } from 'react-native';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { RoundButton, IconNames } from '@components';
-import * as FileSystem from 'expo-file-system';
-import styles from './styles';
+import { ReactNativeFile } from 'apollo-upload-client';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { UserContext } from '@utils';
 import { Routes } from '@routes';
+import styles from './styles';
 
 type PreviewRouteProps = RouteProp<
   Record<
@@ -58,14 +58,8 @@ const CREATE_IMAGE = gql`
 
 const { width, height } = Dimensions.get('window');
 
-const read = async (uri: string) => {
-  const stream = await FileSystem.readAsStringAsync(uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-  return stream;
-};
-
 export default () => {
+  const [loading, setLoading] = useState(false);
   const { navigate } = useNavigation();
   const [createImage] = useMutation(CREATE_IMAGE);
   const { goBack } = useNavigation();
@@ -74,12 +68,17 @@ export default () => {
 
   const uploadFile = useCallback(
     async (userId: number) => {
+      setLoading(true);
       try {
         const { photo, location } = route.params as {
           photo: CapturedPicture;
           location: LocationData;
         };
-        const file = await read(photo.uri);
+        const file = new ReactNativeFile({
+          uri: photo.uri,
+          name: 'temp.jpg',
+          type: 'image/jpeg',
+        });
         await createImage({
           variables: {
             file,
@@ -91,6 +90,7 @@ export default () => {
       } catch (error) {
         console.log('Error with image: ', error);
       }
+      setLoading(false);
       navigate(Routes.Feed, { refresh: true });
     },
     [createImage, navigate, route.params],
@@ -120,6 +120,7 @@ export default () => {
             size="medium"
             iconName={IconNames.Send}
             onPress={() => uploadFile(user.id)}
+            loading={loading}
           />
         </View>
       </SafeAreaView>

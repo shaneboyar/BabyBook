@@ -63,4 +63,4 @@ buck-out/
 *.jsbundle
 
 # iOS Build
-ios/Pods
+ios/Pods/

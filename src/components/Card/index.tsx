@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, ImageBackground, ViewStyle } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ViewStyle } from 'react-native';
+import { Image, CacheManager } from 'react-native-expo-image-cache';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 import { black } from '@colors';
@@ -30,15 +31,29 @@ export default ({
   milestone,
   containerStyle,
   favorited,
-}: CardProps) => (
-  <TouchableOpacity
-    onPress={() => {
-      return;
-    }}>
-    <ImageBackground
-      {...imageData}
-      style={[styles.container, containerStyle]}
-      resizeMode="cover">
+}: CardProps) => {
+  const [path, setPath] = useState();
+
+  useEffect(() => {
+    const getPath = async (uri: string) => {
+      const cachePath = await CacheManager.get(uri, {}).getPath();
+      setPath(cachePath);
+    };
+    getPath(imageData.source.uri);
+  }, [imageData.source.uri]);
+
+  return !path ? null : (
+    <TouchableOpacity style={[styles.container, containerStyle]}>
+      <Image
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+        uri={path}
+      />
       <View style={styles.cardContentContainer}>
         <Text size={8} style={styles.date}>
           {moment(date).format('MMMM Do YYYY @ h:mm:ss a')}
@@ -60,6 +75,6 @@ export default ({
           iconName={favorited ? IconNames.Heart : IconNames.HeartOutline}
         />
       </View>
-    </ImageBackground>
-  </TouchableOpacity>
-);
+    </TouchableOpacity>
+  );
+};

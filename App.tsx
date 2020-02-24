@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+// import { AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
+import * as Location from 'expo-location';
+import * as Font from 'expo-font';
 import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { createUploadLink } from 'apollo-upload-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackNavigator } from '@navigators';
 import { getPushToken, storeData, retrieveData, UserContext } from '@utils';
-import * as Location from 'expo-location';
-import * as Font from 'expo-font';
-// import { AsyncStorage } from 'react-native';
 
 const client = new ApolloClient({
-  uri: 'http://192.168.86.48:4000/',
+  link: createUploadLink({ uri: 'http://192.168.108.85:4000/' }),
+  cache: new InMemoryCache(),
 });
 
 function App() {

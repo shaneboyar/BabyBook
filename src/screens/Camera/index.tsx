@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Text, View, SafeAreaView } from 'react-native';
 import { Camera } from 'expo-camera';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { useNavigation } from '@react-navigation/native';
 import { IconNames, RoundButton } from '@components';
 import { Routes } from '@routes';
@@ -33,9 +34,14 @@ export default (): JSX.Element => {
     setCameraLoading(true);
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
+      const compressedPhoto = await ImageManipulator.manipulateAsync(
+        photo.uri,
+        [],
+        { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
+      );
       const location = await getLocationAsync();
       setCameraLoading(false);
-      navigate(Routes.Preview, { photo, location });
+      navigate(Routes.Preview, { photo: compressedPhoto, location });
     }
   }, [cameraRef, navigate]);
 
