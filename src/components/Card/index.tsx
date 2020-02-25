@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, ViewStyle } from 'react-native';
 import { Image, CacheManager } from 'react-native-expo-image-cache';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 import { black } from '@colors';
-import styles from './styles';
+import { useMutation } from '@apollo/react-hooks';
+import { UserContext } from '@utils';
+import { CREATE_FAVORITE, GET_ALL_IMAGES, GET_FAVORITES } from '@gql';
 import Text from '../Text';
 import Icon, { IconNames } from '../Icon';
 import RoundButton from '../RoundButton';
+import styles from './styles';
 
 interface CardProps {
+  ImageId: number;
   uri: string;
+  preview: string;
   metadata: {
     date: Date;
     title: string;
@@ -21,8 +26,23 @@ interface CardProps {
   containerStyle?: ViewStyle;
 }
 
-export default ({ uri, metadata, favorited, containerStyle }: CardProps) => {
+export default ({
+  uri,
+  ImageId,
+  metadata,
+  favorited: f,
+  preview,
+  containerStyle,
+}: CardProps) => {
+  const user = useContext(UserContext);
+  const [favorited, setFavorited] = useState(f);
   const [path, setPath] = useState();
+  const [createFavorite, { loading }] = useMutation(CREATE_FAVORITE, {
+    refetchQueries: [
+      { query: GET_ALL_IMAGES },
+      { query: GET_FAVORITES, variables: { UserId: user.id } },
+    ],
+  });
 
   useEffect(() => {
     const getPath = async () => {
@@ -31,6 +51,13 @@ export default ({ uri, metadata, favorited, containerStyle }: CardProps) => {
     };
     getPath();
   }, [uri]);
+
+  const favorite = useCallback(async () => {
+    await createFavorite({
+      variables: { UserId: user.id, ImageId },
+    });
+    setFavorited(true);
+  }, [ImageId, createFavorite, user.id]);
 
   return !path ? null : (
     <TouchableOpacity style={[styles.container, containerStyle]}>
@@ -43,6 +70,7 @@ export default ({ uri, metadata, favorited, containerStyle }: CardProps) => {
           right: 0,
         }}
         uri={path}
+        preview={{ uri: `data:image/jpeg,${preview}` }}
       />
       {metadata && (
         <View style={styles.cardContentContainer}>
@@ -65,6 +93,8 @@ export default ({ uri, metadata, favorited, containerStyle }: CardProps) => {
           buttonStyle={styles.favoriteButton}
           size="extraSmall"
           iconName={favorited ? IconNames.Heart : IconNames.HeartOutline}
+          loading={loading}
+          onPress={favorite}
         />
       </View>
     </TouchableOpacity>

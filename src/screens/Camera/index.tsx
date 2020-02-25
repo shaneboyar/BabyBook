@@ -39,9 +39,22 @@ export default (): JSX.Element => {
         [],
         { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
       );
+      const preview = await ImageManipulator.manipulateAsync(
+        photo.uri,
+        [{ resize: { width: photo.width * 0.1 } }],
+        {
+          compress: 0.0001,
+          base64: true,
+          format: ImageManipulator.SaveFormat.JPEG,
+        },
+      );
       const location = await getLocationAsync();
       setCameraLoading(false);
-      navigate(Routes.Preview, { photo: compressedPhoto, location });
+      navigate(Routes.Preview, {
+        photo: compressedPhoto,
+        preview: preview.base64,
+        location,
+      });
     }
   }, [cameraRef, navigate]);
 

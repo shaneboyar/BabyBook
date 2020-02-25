@@ -21,6 +21,7 @@ module.exports = function(api) {
           alias: {
             '@colors': './src/colors',
             '@components': './src/components',
+            '@gql': './src/gql',
             '@hooks': './src/hooks',
             '@navigators': './src/navigators',
             '@routes': './src/routes',

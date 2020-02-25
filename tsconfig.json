@@ -12,6 +12,7 @@
     "paths": {
       "@colors": ["./colors"],
       "@components": ["./components"],
+      "@gql": ["./gql"],
       "@hooks": ["./hooks"],
       "@navigators": ["./navigators"],
       "@routes": ["./routes"],

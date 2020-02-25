@@ -1,55 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { FlatList, SafeAreaView, ActivityIndicator } from 'react-native';
 import { Card, Text } from '@components';
-import styles from './styles';
-import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { useFocusEffect, useRoute, RouteProp } from '@react-navigation/native';
-import { Routes } from '@routes';
-
-type FeedRouteProps = RouteProp<
-  Record<
-    string,
-    {
-      refresh: boolean;
-    }
-  >,
-  Routes.Feed
->;
-
-const GET_ALL_IMAGES = gql`
-  {
-    getAllImages {
-      id
-      uri
-      createdAt
-    }
-  }
-`;
+import { UserContext } from '@utils';
+import { GET_ALL_IMAGES } from '@gql';
+import styles from './styles';
 
 export default (): JSX.Element => {
-  const route = useRoute<FeedRouteProps>();
-  const [shouldRefetch, setShouldRefetch] = useState(false);
-  const { loading, error, data, refetch } = useQuery(GET_ALL_IMAGES, {
-    notifyOnNetworkStatusChange: true,
-  });
-
-  const refetchImages = useCallback(async () => {
-    refetch();
-    setShouldRefetch(false);
-  }, [refetch]);
-
-  useEffect(() => {
-    shouldRefetch && refetchImages();
-  }, [refetch, refetchImages, shouldRefetch]);
-
-  useFocusEffect(
-    useCallback(() => {
-      const refreshParam =
-        (route && route.params && route.params.refresh) || false;
-      refreshParam && setShouldRefetch(true);
-    }, [route]),
-  );
+  const user = useContext(UserContext);
+  const { loading, error, data } = useQuery(GET_ALL_IMAGES);
 
   if (loading) {
     return <ActivityIndicator />;
@@ -64,14 +23,16 @@ export default (): JSX.Element => {
       <SafeAreaView style={styles.container}>
         <FlatList
           style={{ alignSelf: 'stretch', marginBottom: 64 }}
-          data={data.getAllImages}
+          data={data.images}
           showsVerticalScrollIndicator={false}
-          keyExtractor={item => `${item.id}`}
-          renderItem={({ item: { uri, metadata, favorited } }) => (
+          keyExtractor={image => `${image.id}`}
+          renderItem={({ item: { id, uri, preview, metadata, likers } }) => (
             <Card
+              ImageId={id}
               uri={uri}
+              preview={preview}
               metadata={metadata}
-              favorited={favorited}
+              favorited={likers.includes(user.id)}
               containerStyle={{ marginBottom: 16 }}
             />
           )}

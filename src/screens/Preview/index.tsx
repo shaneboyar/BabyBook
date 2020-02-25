@@ -4,19 +4,19 @@ import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { RoundButton, IconNames } from '@components';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { UserContext } from '@utils';
 import { Routes } from '@routes';
+import { GET_ALL_IMAGES, CREATE_IMAGE } from '@gql';
 import styles from './styles';
 
+interface PreviewRouteParams {
+  photo: CapturedPicture;
+  location: LocationData;
+  preview: string;
+}
+
 type PreviewRouteProps = RouteProp<
-  Record<
-    string,
-    {
-      photo: CapturedPicture;
-      location: LocationData;
-    }
-  >,
+  Record<string, PreviewRouteParams>,
   Routes.Preview
 >;
 
@@ -38,30 +38,21 @@ export interface LocationData {
   timestamp: number;
 }
 
-const CREATE_IMAGE = gql`
-  mutation Image(
-    $file: Upload!
-    $latitude: Float!
-    $longitude: Float!
-    $UserId: Int!
-  ) {
-    createImage(
-      file: $file
-      latitude: $latitude
-      longitude: $longitude
-      UserId: $UserId
-    ) {
-      uri
-    }
-  }
-`;
-
 const { width, height } = Dimensions.get('window');
 
 export default () => {
   const [loading, setLoading] = useState(false);
   const { navigate } = useNavigation();
-  const [createImage] = useMutation(CREATE_IMAGE);
+  const [createImage] = useMutation(CREATE_IMAGE, {
+    // eslint-disable-next-line no-shadow
+    update: (cache, { data: { createImage } }) => {
+      const { images } = cache.readQuery({ query: GET_ALL_IMAGES });
+      cache.writeQuery({
+        query: GET_ALL_IMAGES,
+        data: { images: [createImage, ...images] },
+      });
+    },
+  });
   const { goBack } = useNavigation();
   const user = useContext(UserContext);
   const route = useRoute<PreviewRouteProps>();
@@ -70,10 +61,7 @@ export default () => {
     async (UserId: number) => {
       setLoading(true);
       try {
-        const { photo, location } = route.params as {
-          photo: CapturedPicture;
-          location: LocationData;
-        };
+        const { photo, location, preview } = route.params as PreviewRouteParams;
         const file = new ReactNativeFile({
           uri: photo.uri,
           name: 'temp.jpg',
@@ -85,13 +73,14 @@ export default () => {
             UserId,
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
+            preview,
           },
         });
       } catch (error) {
         console.log('Error with image: ', error);
       }
       setLoading(false);
-      navigate(Routes.Feed, { refresh: true });
+      navigate(Routes.Main, { screen: Routes.Feed });
     },
     [createImage, navigate, route.params],
   );
