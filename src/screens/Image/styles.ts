@@ -5,8 +5,10 @@ import { scale } from 'react-native-size-matters';
 const { height, width } = Dimensions.get('window');
 
 export default StyleSheet.create({
-  cameraButtonContainer: {
+  actionButtonsContainer: {
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: scale(8),
     width: '100%',
   },

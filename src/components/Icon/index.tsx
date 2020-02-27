@@ -6,11 +6,13 @@ export enum IconNames {
   Award = 'award',
   Back = 'back',
   Camera = 'camera',
+  Download = 'download',
   Flip = 'flip',
   Heart = 'heart',
   HeartOutline = 'heartOutline',
   Pen = 'pen',
   Send = 'send',
+  Story = 'story',
   Video = 'video',
 }
 
@@ -25,6 +27,7 @@ const iconNameMap = {
   [IconNames.Award]: props => <Feather name="award" {...props} />,
   [IconNames.Back]: props => <Feather name="arrow-left" {...props} />,
   [IconNames.Camera]: props => <Feather name="camera" {...props} />,
+  [IconNames.Download]: props => <Feather name="download" {...props} />,
   [IconNames.Flip]: props => <Feather name="refresh-ccw" {...props} />,
   [IconNames.HeartOutline]: props => (
     <Entypo name="heart-outlined" {...props} />
@@ -32,6 +35,8 @@ const iconNameMap = {
   [IconNames.Heart]: props => <Entypo name="heart" {...props} />,
   [IconNames.Pen]: props => <FontAwesome5 name="pen-nib" {...props} />,
   [IconNames.Send]: props => <Feather name="send" {...props} />,
+  [IconNames.Story]: props => <Feather name="book-open" {...props} />,
+  [IconNames.Video]: props => <Feather name="video" {...props} />,
 };
 
 interface IconProps {

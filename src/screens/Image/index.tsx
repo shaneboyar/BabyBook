@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { Image, CacheManager } from 'react-native-expo-image-cache';
+import * as Sharing from 'expo-sharing';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
-import { RoundButton, IconNames } from '@components';
+import { FavoriteButton, RoundButton, IconNames } from '@components';
 import { Routes } from '@routes';
-import styles from './styles';
 import { black } from '@colors';
-import FavoriteButton from 'components/FavoriteButton';
+import styles from './styles';
 
 interface ImageData {
   uri: string;
@@ -53,6 +53,14 @@ export default () => {
     getPath();
   }, [image]);
 
+  const openShareMenu = useCallback(async () => {
+    if (!(await Sharing.isAvailableAsync())) {
+      console.warn('Sharing is not available');
+      return;
+    }
+    await Sharing.shareAsync(path, {});
+  }, [path]);
+
   return (
     <View style={styles.container}>
       <Image
@@ -76,6 +84,20 @@ export default () => {
             iconColor={black}
           />
           <FavoriteButton ImageId={image.id} favorited={image.favorited} />
+        </View>
+        <View style={styles.actionButtonsContainer}>
+          <RoundButton
+            size="medium"
+            iconName={IconNames.Download}
+            onPress={openShareMenu}
+          />
+          <RoundButton
+            size="medium"
+            iconName={IconNames.Story}
+            onPress={() => {
+              console.log('Open Story');
+            }}
+          />
         </View>
       </SafeAreaView>
     </View>
