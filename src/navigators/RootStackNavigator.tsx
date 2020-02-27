@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Routes } from '@routes';
-import MainTabNavigator from './MainTabNavigator';
-import CameraStackNavigator from './CameraStackNavigator';
 import { UserContext } from '@utils';
 import { Login } from '@screens';
+import MainTabNavigator from './MainTabNavigator';
+import CameraStackNavigator from './CameraStackNavigator';
+import ImageStackNavigator from './ImageStackNavigator';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -27,6 +28,11 @@ export default () => {
       <Screen
         name={Routes.Camera}
         component={CameraStackNavigator}
+        options={{ headerShown: false, header: null }}
+      />
+      <Screen
+        name={Routes.ImageStack}
+        component={ImageStackNavigator}
         options={{ headerShown: false, header: null }}
       />
     </Navigator>

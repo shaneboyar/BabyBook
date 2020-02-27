@@ -8,6 +8,7 @@ import { UserContext } from '@utils';
 import { Routes } from '@routes';
 import { GET_ALL_IMAGES, CREATE_IMAGE } from '@gql';
 import styles from './styles';
+import { black } from '@colors';
 
 interface PreviewRouteParams {
   photo: CapturedPicture;
@@ -94,9 +95,11 @@ export default () => {
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.secondaryActionsContainer}>
           <RoundButton
+            naked
             size="small"
             iconName={IconNames.Back}
             onPress={goBack}
+            iconColor={black}
           />
           <RoundButton
             size="small"

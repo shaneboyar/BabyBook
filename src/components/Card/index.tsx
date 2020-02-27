@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, ViewStyle } from 'react-native';
 import { Image, CacheManager } from 'react-native-expo-image-cache';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+import { Routes } from '@routes';
+import FavoriteButton from 'components/FavoriteButton';
 import { black } from '@colors';
-import { useMutation } from '@apollo/react-hooks';
-import { UserContext } from '@utils';
-import {
-  CREATE_FAVORITE,
-  GET_ALL_IMAGES,
-  GET_FAVORITES,
-  DESTROY_FAVORITE,
-} from '@gql';
+import moment from 'moment';
 import Text from '../Text';
 import Icon, { IconNames } from '../Icon';
-import RoundButton from '../RoundButton';
 import styles from './styles';
 
 interface CardProps {
@@ -35,31 +29,12 @@ export default ({
   uri,
   ImageId,
   metadata,
-  favorited: f,
+  favorited,
   preview,
   containerStyle,
 }: CardProps) => {
-  const user = useContext(UserContext);
-  const [favorited, setFavorited] = useState(f);
+  const { navigate } = useNavigation();
   const [path, setPath] = useState();
-  const [createFavorite, { loading: createLoading }] = useMutation(
-    CREATE_FAVORITE,
-    {
-      refetchQueries: [
-        { query: GET_ALL_IMAGES },
-        { query: GET_FAVORITES, variables: { UserId: user.id } },
-      ],
-    },
-  );
-  const [destroyFavorite, { loading: destroyLoading }] = useMutation(
-    DESTROY_FAVORITE,
-    {
-      refetchQueries: [
-        { query: GET_ALL_IMAGES },
-        { query: GET_FAVORITES, variables: { UserId: user.id } },
-      ],
-    },
-  );
 
   useEffect(() => {
     const getPath = async () => {
@@ -69,22 +44,17 @@ export default ({
     getPath();
   }, [uri]);
 
-  const favorite = useCallback(async () => {
-    await createFavorite({
-      variables: { UserId: user.id, ImageId },
+  const goToImage = useCallback(() => {
+    navigate(Routes.ImageStack, {
+      screen: Routes.ImageScreen,
+      params: { image: { id: ImageId, uri, metadata, preview, favorited } },
     });
-    setFavorited(true);
-  }, [ImageId, createFavorite, user.id]);
-
-  const unfavorite = useCallback(async () => {
-    await destroyFavorite({
-      variables: { UserId: user.id, ImageId },
-    });
-    setFavorited(false);
-  }, [ImageId, destroyFavorite, user.id]);
+  }, [ImageId, favorited, metadata, navigate, preview, uri]);
 
   return !path ? null : (
-    <TouchableOpacity style={[styles.container, containerStyle]}>
+    <TouchableOpacity
+      style={[styles.container, containerStyle]}
+      onPress={goToImage}>
       <Image
         style={{
           position: 'absolute',
@@ -93,9 +63,12 @@ export default ({
           left: 0,
           right: 0,
         }}
-        uri={path}
-        preview={{ uri: `data:image/jpeg,${preview}` }}
+        uri={uri}
+        preview={{ uri: `data:image/jpeg;base64,${preview}` }}
+        // tint="light"
+        // transitionDuration={400}
       />
+
       {metadata && (
         <View style={styles.cardContentContainer}>
           <Text size={8} style={styles.date}>
@@ -113,13 +86,7 @@ export default ({
         </View>
       )}
       <View style={styles.favoriteButtonContainer}>
-        <RoundButton
-          buttonStyle={styles.favoriteButton}
-          size="extraSmall"
-          iconName={favorited ? IconNames.Heart : IconNames.HeartOutline}
-          loading={createLoading || destroyLoading}
-          onPress={favorited ? unfavorite : favorite}
-        />
+        <FavoriteButton ImageId={ImageId} favorited={favorited} />
       </View>
     </TouchableOpacity>
   );

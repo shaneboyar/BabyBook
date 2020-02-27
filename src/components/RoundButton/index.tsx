@@ -5,11 +5,13 @@ import Icon, { IconNames } from '../Icon';
 import styles, { caluclateContainerSize } from './styles';
 import { white } from '@colors';
 
+export type RoundButtonSizes = 'extraSmall' | 'small' | 'medium' | 'large';
 interface RoundButtonProps {
-  size?: 'extraSmall' | 'small' | 'medium' | 'large';
+  size?: RoundButtonSizes;
   iconName: IconNames;
   iconColor?: string;
   onPress?(): void;
+  naked?: boolean;
   buttonStyle?: ViewStyle;
   loading?: boolean;
 }
@@ -27,6 +29,7 @@ export default ({
   iconColor,
   onPress,
   buttonStyle,
+  naked = false,
   loading = false,
 }: RoundButtonProps) => {
   return (
@@ -35,6 +38,7 @@ export default ({
         style={[
           styles.container,
           caluclateContainerSize(sizeMap[size]),
+          naked && styles.naked,
           buttonStyle,
         ]}>
         {loading ? (

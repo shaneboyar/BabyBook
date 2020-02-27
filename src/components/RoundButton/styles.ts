@@ -17,4 +17,7 @@ export default StyleSheet.create({
     margin: 8,
     ...shadow,
   },
+  naked: {
+    backgroundColor: opacityColor(white, 0.0),
+  },
 });

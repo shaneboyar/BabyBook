@@ -5,27 +5,36 @@ import { useQuery } from '@apollo/react-hooks';
 import { UserContext } from '@utils';
 import { GET_ALL_IMAGES } from '@gql';
 import styles from './styles';
+import { Routes } from '@routes';
+import { RouteProp } from '@react-navigation/native';
+
+interface FeedRouteParams {
+  refresh: boolean;
+}
+
+type FeedRouteProps = RouteProp<Record<string, FeedRouteParams>, Routes.Feed>;
 
 export default (): JSX.Element => {
   const user = useContext(UserContext);
   const { loading, error, data } = useQuery(GET_ALL_IMAGES);
 
-  if (loading) {
-    return <ActivityIndicator />;
-  }
+  const renderList = () => {
+    if (loading && !data) {
+      return <ActivityIndicator />;
+    }
 
-  if (error) {
-    return <Text>Error</Text>;
-  }
+    if (error) {
+      return <Text>Error</Text>;
+    }
 
-  if (data) {
-    return (
-      <SafeAreaView style={styles.container}>
+    if (data) {
+      return (
         <FlatList
           style={{ alignSelf: 'stretch', marginBottom: 64 }}
           data={data.images}
+          refreshing={loading}
           showsVerticalScrollIndicator={false}
-          keyExtractor={image => `${image.id}`}
+          keyExtractor={image => `${image.id}-${image.likers.join()}`}
           renderItem={({ item: { id, uri, preview, metadata, likers } }) => (
             <Card
               ImageId={id}
@@ -37,7 +46,9 @@ export default (): JSX.Element => {
             />
           )}
         />
-      </SafeAreaView>
-    );
-  }
+      );
+    }
+  };
+
+  return <SafeAreaView style={styles.container}>{renderList()}</SafeAreaView>;
 };

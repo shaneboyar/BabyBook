@@ -33,13 +33,16 @@ const screenOptions = ({ route }): BottomTabNavigationOptions => ({
           />
         );
       }
+      case Routes.ImageStack: {
+        return null;
+      }
     }
   },
 });
 
 export default () => (
   <TabNavigator screenOptions={screenOptions} initialRouteName={Routes.Feed}>
-    <Screen name="Favorites" component={FavoritesScreen} />
-    <Screen name="Feed" component={FeedScreen} />
+    <Screen name={Routes.Favorites} component={FavoritesScreen} />
+    <Screen name={Routes.Feed} component={FeedScreen} />
   </TabNavigator>
 );

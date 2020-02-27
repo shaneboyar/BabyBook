@@ -7,6 +7,7 @@ import { IconNames, RoundButton } from '@components';
 import { Routes } from '@routes';
 import styles from './styles';
 import { getLocationAsync } from 'utils';
+import { black } from '@colors';
 
 export default (): JSX.Element => {
   const { goBack, navigate } = useNavigation();
@@ -71,8 +72,10 @@ export default (): JSX.Element => {
           <View style={styles.secondaryActionsContainer}>
             <RoundButton
               size="small"
+              naked
               iconName={IconNames.Back}
               onPress={goBack}
+              iconColor={black}
             />
             <RoundButton
               size="small"
