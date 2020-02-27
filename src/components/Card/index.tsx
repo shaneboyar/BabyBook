@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, ViewStyle } from 'react-native';
 import { Image, CacheManager } from 'react-native-expo-image-cache';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Routes } from '@routes';
 import FavoriteButton from 'components/FavoriteButton';
 import { black } from '@colors';
@@ -34,6 +34,7 @@ export default ({
   containerStyle,
 }: CardProps) => {
   const { navigate } = useNavigation();
+  const { name } = useRoute();
   const [path, setPath] = useState();
 
   useEffect(() => {
@@ -47,9 +48,12 @@ export default ({
   const goToImage = useCallback(() => {
     navigate(Routes.ImageStack, {
       screen: Routes.ImageScreen,
-      params: { image: { id: ImageId, uri, metadata, preview, favorited } },
+      params: {
+        image: { id: ImageId, uri, metadata, preview, favorited },
+        from: name,
+      },
     });
-  }, [ImageId, favorited, metadata, navigate, preview, uri]);
+  }, [ImageId, favorited, metadata, navigate, preview, name, uri]);
 
   return !path ? null : (
     <TouchableOpacity

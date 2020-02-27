@@ -21,6 +21,7 @@ interface ImageData {
 
 interface ImageRouteParams {
   image: ImageData;
+  from: Routes;
 }
 
 type ImageRouteProps = RouteProp<
@@ -44,7 +45,7 @@ export default () => {
   const [path, setPath] = useState();
   const { navigate } = useNavigation();
   const route = useRoute<ImageRouteProps>();
-  const { image } = route.params as ImageRouteParams;
+  const { image, from } = route.params as ImageRouteParams;
   useEffect(() => {
     const getPath = async () => {
       const cachePath = await CacheManager.get(image.uri, {}).getPath();
@@ -79,7 +80,7 @@ export default () => {
           <RoundButton
             size="small"
             iconName={IconNames.Back}
-            onPress={() => navigate(Routes.Main, { screen: Routes.Feed })}
+            onPress={() => navigate(Routes.Main, { screen: from })}
             naked
             iconColor={black}
           />
