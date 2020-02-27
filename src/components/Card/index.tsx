@@ -6,7 +6,12 @@ import moment from 'moment';
 import { black } from '@colors';
 import { useMutation } from '@apollo/react-hooks';
 import { UserContext } from '@utils';
-import { CREATE_FAVORITE, GET_ALL_IMAGES, GET_FAVORITES } from '@gql';
+import {
+  CREATE_FAVORITE,
+  GET_ALL_IMAGES,
+  GET_FAVORITES,
+  DESTROY_FAVORITE,
+} from '@gql';
 import Text from '../Text';
 import Icon, { IconNames } from '../Icon';
 import RoundButton from '../RoundButton';
@@ -37,12 +42,24 @@ export default ({
   const user = useContext(UserContext);
   const [favorited, setFavorited] = useState(f);
   const [path, setPath] = useState();
-  const [createFavorite, { loading }] = useMutation(CREATE_FAVORITE, {
-    refetchQueries: [
-      { query: GET_ALL_IMAGES },
-      { query: GET_FAVORITES, variables: { UserId: user.id } },
-    ],
-  });
+  const [createFavorite, { loading: createLoading }] = useMutation(
+    CREATE_FAVORITE,
+    {
+      refetchQueries: [
+        { query: GET_ALL_IMAGES },
+        { query: GET_FAVORITES, variables: { UserId: user.id } },
+      ],
+    },
+  );
+  const [destroyFavorite, { loading: destroyLoading }] = useMutation(
+    DESTROY_FAVORITE,
+    {
+      refetchQueries: [
+        { query: GET_ALL_IMAGES },
+        { query: GET_FAVORITES, variables: { UserId: user.id } },
+      ],
+    },
+  );
 
   useEffect(() => {
     const getPath = async () => {
@@ -58,6 +75,13 @@ export default ({
     });
     setFavorited(true);
   }, [ImageId, createFavorite, user.id]);
+
+  const unfavorite = useCallback(async () => {
+    await destroyFavorite({
+      variables: { UserId: user.id, ImageId },
+    });
+    setFavorited(false);
+  }, [ImageId, destroyFavorite, user.id]);
 
   return !path ? null : (
     <TouchableOpacity style={[styles.container, containerStyle]}>
@@ -93,8 +117,8 @@ export default ({
           buttonStyle={styles.favoriteButton}
           size="extraSmall"
           iconName={favorited ? IconNames.Heart : IconNames.HeartOutline}
-          loading={loading}
-          onPress={favorite}
+          loading={createLoading || destroyLoading}
+          onPress={favorited ? unfavorite : favorite}
         />
       </View>
     </TouchableOpacity>

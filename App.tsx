@@ -12,7 +12,7 @@ import { RootStackNavigator } from '@navigators';
 import { getPushToken, storeData, retrieveData, UserContext } from '@utils';
 
 const client = new ApolloClient({
-  link: createUploadLink({ uri: 'http://192.168.108.84:4000/' }),
+  link: createUploadLink({ uri: 'http://192.168.86.48:4000/' }),
   cache: new InMemoryCache(),
 });
 

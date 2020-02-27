@@ -11,6 +11,17 @@ export const CREATE_FAVORITE = gql`
   }
 `;
 
+export const DESTROY_FAVORITE = gql`
+  mutation UnfavoritedImage($UserId: Int!, $ImageId: Int!) {
+    destroyFavorite(UserId: $UserId, ImageId: $ImageId) {
+      id
+      uri
+      likers
+      createdAt
+    }
+  }
+`;
+
 export const CREATE_IMAGE = gql`
   mutation Image(
     $file: Upload!
