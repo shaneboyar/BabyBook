@@ -3,24 +3,14 @@ import { View, TextInput, Button } from 'react-native';
 import styles from './styles';
 import { UserContext, LocalUserData, storeData } from '@utils';
 import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { useNavigation } from '@react-navigation/native';
 import { Routes } from '@routes';
-
-const CREATE_USER = gql`
-  mutation User($uuid: String!, $name: String!) {
-    createUser(name: $name, uuid: $uuid) {
-      id
-      name
-      uuid
-    }
-  }
-`;
+import { CREATE_USER } from '@gql';
 
 export default () => {
   const [name, setName] = useState('');
   const { navigate } = useNavigation();
-  const [createUserMutation, { loading, data }] = useMutation<{
+  const [createUser, { loading, data }] = useMutation<{
     createUser: LocalUserData;
   }>(CREATE_USER);
   const { uuid, setUser } = useContext(UserContext);
@@ -46,7 +36,7 @@ export default () => {
       />
       <Button
         onPress={() => {
-          createUserMutation({ variables: { uuid, name } });
+          createUser({ variables: { user: { uuid, name } } });
         }}
         title={loading ? 'Loading' : 'Login'}
       />

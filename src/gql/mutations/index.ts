@@ -1,47 +1,61 @@
 import { gql } from 'apollo-boost';
 
-export const CREATE_FAVORITE = gql`
-  mutation FavoritedImage($UserId: Int!, $ImageId: Int!) {
-    createFavorite(UserId: $UserId, ImageId: $ImageId) {
+export const CREATE_USER = gql`
+  mutation CreateUser($user: UserInput!) {
+    createUser(user: $user) {
       id
-      uri
-      likers
-      createdAt
+      name
+      uuid
+    }
+  }
+`;
+
+export const CREATE_FAVORITE = gql`
+  mutation CreateFavorite($favorite: FavoriteInput!) {
+    createFavorite(favorite: $favorite) {
+      id
+      image {
+        id
+        uri
+        preview
+        createdAt
+        user {
+          id
+          name
+        }
+        favoriteUserIds
+      }
     }
   }
 `;
 
 export const DESTROY_FAVORITE = gql`
-  mutation UnfavoritedImage($UserId: Int!, $ImageId: Int!) {
-    destroyFavorite(UserId: $UserId, ImageId: $ImageId) {
+  mutation DestroyFavorite($favorite: FavoriteInput!) {
+    destroyFavorite(favorite: $favorite) {
       id
-      uri
-      likers
-      createdAt
+      image {
+        id
+        user {
+          id
+        }
+        favoriteUserIds
+      }
     }
   }
 `;
 
 export const CREATE_IMAGE = gql`
-  mutation Image(
-    $file: Upload!
-    $preview: String!
-    $latitude: Float!
-    $longitude: Float!
-    $UserId: Int!
-  ) {
-    createImage(
-      file: $file
-      preview: $preview
-      latitude: $latitude
-      longitude: $longitude
-      UserId: $UserId
-    ) {
+  mutation Image($UserId: Int!, $file: Upload!, $preview: String!) {
+    createImage(UserId: $UserId, file: $file, preview: $preview) {
       id
       uri
       preview
-      likers
       createdAt
+      user {
+        id
+        name
+      }
+      favoriteUserIds
     }
   }
 `;

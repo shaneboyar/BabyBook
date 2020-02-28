@@ -62,7 +62,7 @@ export default () => {
     async (UserId: number) => {
       setLoading(true);
       try {
-        const { photo, location, preview } = route.params as PreviewRouteParams;
+        const { photo, preview } = route.params as PreviewRouteParams;
         const file = new ReactNativeFile({
           uri: photo.uri,
           name: 'temp.jpg',
@@ -72,8 +72,6 @@ export default () => {
           variables: {
             file,
             UserId,
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
             preview,
           },
         });

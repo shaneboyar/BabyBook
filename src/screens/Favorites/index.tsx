@@ -29,13 +29,15 @@ export default (): JSX.Element => {
           data={data.userFavorites}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => `${item.id}`}
-          renderItem={({ item: { id, uri, metadata, preview, likers } }) => (
+          renderItem={({
+            item: { id, uri, metadata, preview, favoriteUserIds },
+          }) => (
             <Card
               ImageId={id}
               uri={uri}
               preview={preview}
               metadata={metadata}
-              favorited={likers.includes(user.id)}
+              favorited={favoriteUserIds.includes(user.id)}
               containerStyle={{ marginBottom: 16 }}
             />
           )}

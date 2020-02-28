@@ -24,6 +24,7 @@ export default (): JSX.Element => {
     }
 
     if (error) {
+      console.log('error: ', error);
       return <Text>Error</Text>;
     }
 
@@ -34,14 +35,16 @@ export default (): JSX.Element => {
           data={data.images}
           refreshing={loading}
           showsVerticalScrollIndicator={false}
-          keyExtractor={image => `${image.id}-${image.likers.join()}`}
-          renderItem={({ item: { id, uri, preview, metadata, likers } }) => (
+          keyExtractor={image => `${image.id}-${image.favoriteUserIds.join()}`}
+          renderItem={({
+            item: { id, uri, preview, metadata, favoriteUserIds },
+          }) => (
             <Card
               ImageId={id}
               uri={uri}
               preview={preview}
               metadata={metadata}
-              favorited={likers.includes(user.id)}
+              favorited={favoriteUserIds.includes(user.id)}
               containerStyle={{ marginBottom: 16 }}
             />
           )}

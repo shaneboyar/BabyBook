@@ -5,20 +5,29 @@ export const GET_FAVORITES = gql`
     userFavorites(UserId: $UserId) {
       id
       uri
-      likers
       preview
+      createdAt
+      user {
+        id
+        name
+      }
+      favoriteUserIds
     }
   }
 `;
 
 export const GET_ALL_IMAGES = gql`
-  query images {
+  query Images {
     images {
       id
       uri
       preview
       createdAt
-      likers
+      user {
+        id
+        name
+      }
+      favoriteUserIds
     }
   }
 `;
