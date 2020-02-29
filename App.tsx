@@ -4,6 +4,7 @@ import { AppLoading } from 'expo';
 import * as Location from 'expo-location';
 import * as Font from 'expo-font';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { ApolloClient } from 'apollo-client';
 import { createUploadLink } from 'apollo-upload-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -12,7 +13,7 @@ import { RootStackNavigator } from '@navigators';
 import { getPushToken, storeData, retrieveData, UserContext } from '@utils';
 
 const client = new ApolloClient({
-  link: createUploadLink({ uri: 'http://192.168.86.48:4000/' }),
+  link: createUploadLink({ uri: 'http://e965c335.ngrok.io' }),
   cache: new InMemoryCache(),
 });
 
@@ -56,7 +57,9 @@ function App() {
   return (
     <UserContext.Provider value={{ ...user, setUser }}>
       <NavigationContainer>
-        <RootStackNavigator />
+        <PaperProvider>
+          <RootStackNavigator />
+        </PaperProvider>
       </NavigationContainer>
     </UserContext.Provider>
   );

@@ -21,7 +21,7 @@ type PreviewRouteProps = RouteProp<
   Routes.Preview
 >;
 
-type CapturedPicture = {
+export type CapturedPicture = {
   width: number;
   height: number;
   uri: string;
@@ -62,7 +62,7 @@ export default () => {
     async (UserId: number) => {
       setLoading(true);
       try {
-        const { photo, preview } = route.params as PreviewRouteParams;
+        const { photo, preview, location } = route.params as PreviewRouteParams;
         const file = new ReactNativeFile({
           uri: photo.uri,
           name: 'temp.jpg',
@@ -73,6 +73,8 @@ export default () => {
             file,
             UserId,
             preview,
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
           },
         });
       } catch (error) {
@@ -102,7 +104,7 @@ export default () => {
           <RoundButton
             size="small"
             iconName={IconNames.Pen}
-            // onPress={flipCamera}
+            onPress={() => navigate(Routes.Entry, { ...route.params })}
           />
         </View>
         <View style={styles.cameraButtonContainer}>

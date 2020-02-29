@@ -1,6 +1,7 @@
 export enum Routes {
   Camera = 'Camera',
   CameraCapture = 'CameraCapture',
+  Entry = 'Entry',
   Feed = 'Feed',
   Favorites = 'Favorites',
   ImageStack = 'ImageStack',

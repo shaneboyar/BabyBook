@@ -12,16 +12,17 @@ import Icon, { IconNames } from '../Icon';
 import styles from './styles';
 
 interface CardProps {
-  ImageId: number;
+  ImageId?: number;
   uri: string;
   preview: string;
-  metadata: {
+  metadata?: {
     date: Date;
     title: string;
     milestone: string;
   };
-
-  favorited: boolean;
+  disabled?: boolean;
+  hideFavoriteButton?: boolean;
+  favorited?: boolean;
   containerStyle?: ViewStyle;
 }
 
@@ -29,7 +30,9 @@ export default ({
   uri,
   ImageId,
   metadata,
-  favorited,
+  hideFavoriteButton = false,
+  favorited = false,
+  disabled = false,
   preview,
   containerStyle,
 }: CardProps) => {
@@ -58,7 +61,8 @@ export default ({
   return !path ? null : (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      onPress={goToImage}>
+      onPress={goToImage}
+      disabled={disabled}>
       <Image
         style={{
           position: 'absolute',
@@ -89,9 +93,11 @@ export default ({
           </View>
         </View>
       )}
-      <View style={styles.favoriteButtonContainer}>
-        <FavoriteButton ImageId={ImageId} favorited={favorited} />
-      </View>
+      {!hideFavoriteButton && (
+        <View style={styles.favoriteButtonContainer}>
+          <FavoriteButton ImageId={ImageId} favorited={favorited} />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

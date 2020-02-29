@@ -45,8 +45,26 @@ export const DESTROY_FAVORITE = gql`
 `;
 
 export const CREATE_IMAGE = gql`
-  mutation Image($UserId: Int!, $file: Upload!, $preview: String!) {
-    createImage(UserId: $UserId, file: $file, preview: $preview) {
+  mutation Image(
+    $UserId: Int!
+    $file: Upload!
+    $preview: String!
+    $latitude: Float!
+    $longitude: Float!
+    $title: String
+    $story: String
+    $milestone: String
+  ) {
+    createImage(
+      UserId: $UserId
+      file: $file
+      preview: $preview
+      latitude: $latitude
+      longitude: $longitude
+      title: $title
+      story: $story
+      milestone: $milestone
+    ) {
       id
       uri
       preview
