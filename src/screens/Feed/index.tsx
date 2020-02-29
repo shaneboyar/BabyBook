@@ -5,14 +5,6 @@ import { useQuery } from '@apollo/react-hooks';
 import { UserContext } from '@utils';
 import { GET_ALL_IMAGES } from '@gql';
 import styles from './styles';
-import { Routes } from '@routes';
-import { RouteProp } from '@react-navigation/native';
-
-interface FeedRouteParams {
-  refresh: boolean;
-}
-
-type FeedRouteProps = RouteProp<Record<string, FeedRouteParams>, Routes.Feed>;
 
 export default (): JSX.Element => {
   const user = useContext(UserContext);

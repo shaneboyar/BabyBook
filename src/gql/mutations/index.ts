@@ -18,12 +18,19 @@ export const CREATE_FAVORITE = gql`
         id
         uri
         preview
-        createdAt
         user {
           id
           name
         }
         favoriteUserIds
+        metadata {
+          title
+          story
+          milestone
+          latitude
+          longitude
+          createdAt
+        }
       }
     }
   }
@@ -35,10 +42,21 @@ export const DESTROY_FAVORITE = gql`
       id
       image {
         id
+        uri
+        preview
         user {
           id
+          name
         }
         favoriteUserIds
+        metadata {
+          title
+          story
+          milestone
+          latitude
+          longitude
+          createdAt
+        }
       }
     }
   }
@@ -68,12 +86,19 @@ export const CREATE_IMAGE = gql`
       id
       uri
       preview
-      createdAt
       user {
         id
         name
       }
       favoriteUserIds
+      metadata {
+        title
+        story
+        milestone
+        latitude
+        longitude
+        createdAt
+      }
     }
   }
 `;

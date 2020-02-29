@@ -6,12 +6,19 @@ export const GET_FAVORITES = gql`
       id
       uri
       preview
-      createdAt
       user {
         id
         name
       }
       favoriteUserIds
+      metadata {
+        title
+        story
+        milestone
+        latitude
+        longitude
+        createdAt
+      }
     }
   }
 `;
@@ -22,12 +29,19 @@ export const GET_ALL_IMAGES = gql`
       id
       uri
       preview
-      createdAt
       user {
         id
         name
       }
       favoriteUserIds
+      metadata {
+        title
+        story
+        milestone
+        latitude
+        longitude
+        createdAt
+      }
     }
   }
 `;

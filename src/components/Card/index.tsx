@@ -77,7 +77,7 @@ export default ({
         // transitionDuration={400}
       />
 
-      {metadata && (
+      {metadata.title && (
         <View style={styles.cardContentContainer}>
           <Text size={8} style={styles.date}>
             {moment(metadata.date).format('MMMM Do YYYY @ h:mm:ss a')}
@@ -86,10 +86,14 @@ export default ({
             {metadata.title}
           </Text>
           <View style={styles.milestoneContainer}>
-            <Icon color={black} name={IconNames.Award} />
-            <Text variant="semi-bold" style={styles.milestone}>
-              {metadata.milestone}
-            </Text>
+            {metadata.milestone && (
+              <>
+                <Icon color={black} name={IconNames.Award} />
+                <Text variant="semi-bold" style={styles.milestone}>
+                  {metadata.milestone}
+                </Text>
+              </>
+            )}
           </View>
         </View>
       )}
