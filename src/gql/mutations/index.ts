@@ -20,7 +20,6 @@ export const CREATE_FAVORITE = gql`
         preview
         user {
           id
-          name
         }
         favoriteUserIds
         metadata {
@@ -29,7 +28,9 @@ export const CREATE_FAVORITE = gql`
           milestone
           latitude
           longitude
+          location
           createdAt
+          user
         }
       }
     }
@@ -46,7 +47,6 @@ export const DESTROY_FAVORITE = gql`
         preview
         user {
           id
-          name
         }
         favoriteUserIds
         metadata {
@@ -55,7 +55,9 @@ export const DESTROY_FAVORITE = gql`
           milestone
           latitude
           longitude
+          location
           createdAt
+          user
         }
       }
     }
@@ -88,7 +90,6 @@ export const CREATE_IMAGE = gql`
       preview
       user {
         id
-        name
       }
       favoriteUserIds
       metadata {
@@ -97,7 +98,9 @@ export const CREATE_IMAGE = gql`
         milestone
         latitude
         longitude
+        location
         createdAt
+        user
       }
     }
   }

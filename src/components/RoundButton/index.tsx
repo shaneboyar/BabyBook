@@ -12,8 +12,10 @@ interface RoundButtonProps {
   iconColor?: string;
   onPress?(): void;
   naked?: boolean;
+  containerStyle?: ViewStyle;
   buttonStyle?: ViewStyle;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const sizeMap = {
@@ -28,25 +30,29 @@ export default ({
   iconName,
   iconColor,
   onPress,
+  containerStyle,
   buttonStyle,
   naked = false,
   loading = false,
+  disabled = false,
 }: RoundButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View
-        style={[
-          styles.container,
-          caluclateContainerSize(sizeMap[size]),
-          naked && styles.naked,
-          buttonStyle,
-        ]}>
-        {loading ? (
-          <ActivityIndicator color={white} />
-        ) : (
-          <Icon name={iconName} size={sizeMap[size]} color={iconColor} />
-        )}
-      </View>
-    </TouchableOpacity>
+    <View style={containerStyle}>
+      <TouchableOpacity onPress={onPress} disabled={disabled}>
+        <View
+          style={[
+            styles.container,
+            caluclateContainerSize(sizeMap[size]),
+            naked && styles.naked,
+            buttonStyle,
+          ]}>
+          {loading ? (
+            <ActivityIndicator color={white} />
+          ) : (
+            <Icon name={iconName} size={sizeMap[size]} color={iconColor} />
+          )}
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };

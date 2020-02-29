@@ -8,7 +8,6 @@ export const GET_FAVORITES = gql`
       preview
       user {
         id
-        name
       }
       favoriteUserIds
       metadata {
@@ -17,7 +16,9 @@ export const GET_FAVORITES = gql`
         milestone
         latitude
         longitude
+        location
         createdAt
+        user
       }
     }
   }
@@ -31,7 +32,6 @@ export const GET_ALL_IMAGES = gql`
       preview
       user {
         id
-        name
       }
       favoriteUserIds
       metadata {
@@ -40,7 +40,9 @@ export const GET_ALL_IMAGES = gql`
         milestone
         latitude
         longitude
+        location
         createdAt
+        user
       }
     }
   }

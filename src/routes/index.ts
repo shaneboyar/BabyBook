@@ -9,4 +9,5 @@ export enum Routes {
   Login = 'Login',
   Main = 'Main',
   Preview = 'Preview',
+  Story = 'Story',
 }

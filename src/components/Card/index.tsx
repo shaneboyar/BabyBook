@@ -77,10 +77,10 @@ export default ({
         // transitionDuration={400}
       />
 
-      {metadata.title && (
+      {metadata && metadata.title && (
         <View style={styles.cardContentContainer}>
           <Text size={8} style={styles.date}>
-            {moment(metadata.date).format('MMMM Do YYYY @ h:mm:ss a')}
+            {moment(metadata.date).format('MMMM Do YYYY @ h:mm a')}
           </Text>
           <Text size={32} variant="bold" style={styles.title}>
             {metadata.title}

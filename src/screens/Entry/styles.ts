@@ -1,10 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { opacityColor, white, softPurple } from '@colors';
 import { shadow } from '@utils';
+import { scale } from 'react-native-size-matters';
 
 export default StyleSheet.create({
   cardContainer: {
+    height: scale(382),
     marginBottom: 16,
+    width: '100%',
   },
   container: {
     alignItems: 'center',

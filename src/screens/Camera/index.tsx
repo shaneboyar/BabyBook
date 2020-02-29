@@ -89,6 +89,7 @@ export default (): JSX.Element => {
               iconName={IconNames.Camera}
               onPress={takePicture}
               loading={cameraLoading}
+              disabled={cameraLoading}
             />
           </View>
         </SafeAreaView>
