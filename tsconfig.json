@@ -4,8 +4,20 @@
     "jsx": "react-native",
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
+    "module": "ES6",
     "noEmit": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@colors": ["./colors"],
+      "@components": ["./components"],
+      "@gql": ["./gql"],
+      "@hooks": ["./hooks"],
+      "@navigators": ["./navigators"],
+      "@routes": ["./routes"],
+      "@screens": ["./screens"],
+      "@utils": ["./utils"]
+    }
   }
 }
