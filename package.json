@@ -11,7 +11,8 @@
     "tsc": "tsc -noEmit",
     "git:add": "git add .",
     "postinstall": "cd ios; pod install; cd ..",
-    "postversion": "react-native-version"
+    "postversion": "react-native-version",
+    "deploy": "./deploy"
   },
   "husky": {
     "hooks": {
