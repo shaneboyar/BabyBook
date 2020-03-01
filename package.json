@@ -10,7 +10,7 @@
     "build:ios": "expo build:ios --non-interactive --no-publish",
     "downloadIPA": "curl -o ./ios/app.ipa $(expo url:ipa --non-interactive)",
     "pilot": "cd ios; bundle exec fastlane pilot upload; cd ..",
-    "testFlight": "npm-run-all release publish pushRelease build:ios downloadIPA pilot",
+    "testflight": "npm-run-all release publish pushRelease build:ios downloadIPA pilot",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
