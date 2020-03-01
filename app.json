@@ -6,7 +6,7 @@
     "slug": "BabyBook",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
@@ -15,7 +15,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.mysteriumcosmographicum.BabyBook",
-      "buildNumber": "0.0.2"
+      "buildNumber": "0.0.3"
     }
   }
 }

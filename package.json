@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "pushNewVersion": "git push --follow-tags origin develop",
     "release:patch": "yarn standard-version --release-as patch",
