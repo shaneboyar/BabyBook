@@ -1,5 +1,7 @@
 {
+  "version": "0.0.0",
   "scripts": {
+    "build:ios": "expo build:ios --release-channel production --non-interactive --no-publish",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
@@ -89,6 +91,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
     "react-native-version": "^3.2.0",
+    "standard-version": "^7.1.0",
+    "standard-version-expo": "^1.0.1",
     "typescript": "~3.6.3"
   },
   "jest": {
