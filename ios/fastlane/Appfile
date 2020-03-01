@@ -1,0 +1,8 @@
+app_identifier("com.mysteriumcosmographicum.BabyBook") # The bundle identifier of your app
+apple_id("shaneboyar@mac.com") # Your Apple email address
+
+itc_team_id("118982659") # App Store Connect Team ID
+team_id("76GZ99FCP7") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

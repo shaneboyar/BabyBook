@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Location from 'expo-location';
 import * as Font from 'expo-font';
@@ -13,7 +12,12 @@ import { RootStackNavigator } from '@navigators';
 import { getPushToken, storeData, retrieveData, UserContext } from '@utils';
 
 const client = new ApolloClient({
-  link: createUploadLink({ uri: 'http://192.168.1.19:4000' }),
+  link: createUploadLink({
+    uri:
+      process.env.NODE_ENV === 'development'
+        ? 'http://11d24287.ngrok.io'
+        : 'https://baby-book-server.herokuapp.com',
+  }),
   cache: new InMemoryCache(),
 });
 
@@ -22,7 +26,6 @@ function App() {
   const [user, setUser] = useState();
 
   const setupApp = async () => {
-    // await AsyncStorage.clear();
     const storedUser = await retrieveData('user');
     setUser(storedUser);
     if (!storedUser) {
