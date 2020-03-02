@@ -47,3 +47,27 @@ export const GET_ALL_IMAGES = gql`
     }
   }
 `;
+
+export const GET_IMAGE = gql`
+  query Image($id: Int!) {
+    image(id: $id) {
+      id
+      uri
+      preview
+      user {
+        id
+      }
+      favoriteUserIds
+      metadata {
+        title
+        story
+        milestone
+        latitude
+        longitude
+        location
+        createdAt
+        user
+      }
+    }
+  }
+`;
