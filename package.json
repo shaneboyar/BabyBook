@@ -9,7 +9,7 @@
     "pushRelease": "git push --follow-tags origin develop",
     "build:ios": "expo build:ios --non-interactive --no-publish",
     "downloadIPA": "curl -o ./ios/app.ipa $(expo url:ipa --non-interactive)",
-    "pilot": "cd ios; bundle exec fastlane pilot upload; cd ..",
+    "pilot": "cd ios; bundle exec fastlane beta; cd ..",
     "testflight": "npm-run-all release publish pushRelease build:ios downloadIPA pilot",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
