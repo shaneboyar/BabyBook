@@ -19,7 +19,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.mysteriumcosmographicum.BabyBook",
-      "buildNumber": "0.0.1",
+      "buildNumber": "0.0.3",
       "config": {
         "usesNonExemptEncryption": false
       },
