@@ -15,7 +15,7 @@ const client = new ApolloClient({
   link: createUploadLink({
     uri:
       process.env.NODE_ENV === 'development'
-        ? 'http://11d24287.ngrok.io'
+        ? 'http://192.168.108.85:4000'
         : 'https://baby-book-server.herokuapp.com',
   }),
   cache: new InMemoryCache(),
