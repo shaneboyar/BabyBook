@@ -52,7 +52,7 @@
     "expo-sharing": "^8.0.0",
     "graphql": "^14.6.0",
     "graphql-upload": "^10.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "~0.61.4",
